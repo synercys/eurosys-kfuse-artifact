@@ -1,0 +1,45 @@
+result for cgroup benchmark:
+cgroup ||  type  ||  # of programs attached ||  # GBytes/sec
+//merger-retpoline
+cgroup merger-retpoline 0 27.4
+cgroup merger-retpoline 20 27.11
+cgroup merger-retpoline 40 26.96
+cgroup merger-retpoline 60 26.8
+cgroup merger-retpoline 80 26.8
+cgroup merger-retpoline 100 26.96
+cgroup merger-retpoline 120 26.77
+cgroup merger-retpoline 140 26.825
+cgroup merger-retpoline 160 26.5
+
+//nonmerger-retpoline
+cgroup nonmerger-retpoline 0 27.15
+cgroup nonmerger-retpoline 20 26.28
+cgroup nonmerger-retpoline 40 25.375
+cgroup nonmerger-retpoline 60 24.275
+cgroup nonmerger-retpoline 80 23.1
+cgroup nonmerger-retpoline 100 22.375
+cgroup nonmerger-retpoline 120 21.55
+cgroup nonmerger-retpoline 140 21.0
+cgroup nonmerger-retpoline 160 20.15
+
+//merger-noretpoline
+cgroup merger-noretpoline 0 30.378
+cgroup merger-noretpoline 20 29.942
+cgroup merger-noretpoline 40 29.92
+cgroup merger-noretpoline 60 29.78
+cgroup merger-noretpoline 80 29.643
+cgroup merger-noretpoline 100 29.35
+cgroup merger-noretpoline 120 29.12
+cgroup merger-noretpoline 140 28.87
+cgroup merger-noretpoline 160 28.74
+
+//nonmerger-noretpoline
+cgroup nonmerger-noretpoline 0 30.775
+cgroup nonmerger-noretpoline 20 29.971
+cgroup nonmerger-noretpoline 40 29.08
+cgroup nonmerger-noretpoline 60 28.825
+cgroup nonmerger-noretpoline 80 28.386
+cgroup nonmerger-noretpoline 100 27.73
+cgroup nonmerger-noretpoline 120 26.95
+cgroup nonmerger-noretpoline 140 26.25
+cgroup nonmerger-noretpoline 160 25.83

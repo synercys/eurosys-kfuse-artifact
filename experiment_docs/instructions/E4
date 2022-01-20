@@ -1,0 +1,26 @@
+# How to run experiments?
+
+[Experiment: cgroup + iPerf]
+
+# Step1: Launch VM ($num = 1,2,3,4)
+#
+# $num = 1 => kfuse-retpoline
+# $num = 2 => nokfuse-retpoline
+# $num = 3 => kfuse-noretpoline
+# $num = 4 => nokfuse-noretpoline
+./launch_vm.sh $num 
+
+# Step2: (In VM) ($nfilter = 0, 20, 40, 60, 80, 100, 120, 140, 160 => how many filters attach to the cgroup?)
+cd root
+cgroup_simple_benchmark $nfilter
+
+# Step3: (In VM) Use iPerf3 to measure TCP bandwidth
+iperf3 -c 172.16.2.2 -t 30 -P 16 -l 32K
+
+
+[Note]
+You may need to run multiple times to get the average result.
+In addition, if your result is unstable, you can pin your tasks on idle CPUs, and fix their frequency.
+We expected that the kernel with KFuse will be faster than without KFuse (Speed: kfuse-retpoline > nokfuse-retpoline; kfuse-noretpoline > nokfuse-noretpoline), 
+and without retpoline will be faster than with retpoline (Speed: kfuse-noretpoline > kfuse-retpoline; nokfuse-noretpoline > nokfuse-retpoline).
+

@@ -1,0 +1,46 @@
+# How to run experiments?
+
+[Experiment1: tail-call kfuse-retpoline]
+In the paper, we run Step3 50 times and calculate the average. 
+
+# Step1: Launch VM
+./launch_vm.sh 5
+
+# Step2: (In VM)
+cd /root/tail-call-benchmark/
+
+# Step3: Run experiments
+./benchmark_tail_call.sh 32 10000
+
+
+[Experiment2: tail-call nokfuse-retpoline (direct jump)]
+In the paper, we run Step3 50 times and calculate the average.
+
+# Step1: Launch VM
+./launch_vm.sh 2
+
+# Step2: (In VM)
+cd /root/tail-call-benchmark/
+
+# Step3: Run experiments
+./run.sh 32 10000
+
+
+[Experiment3: tail-call nokfuse-retpoline (indirect jump)]
+In the paper, we run Step3 50 times and calculate the average.
+
+# Step1: Launch VM
+./launch_vm.sh 6
+
+# Step2: (In VM)
+cd /root/tail-call-benchmark/
+
+# Step3: Run experiments
+./run.sh 32 10000
+
+
+[Note]
+Your experiment results may differ from ours due to different environment.
+However, the relationship between these 3 experiments should be the same. 
+(Speed: [tail-call kfuse-retpoline] > [tail-call nokfuse-retpoline (direct jump)] > [tail-call nokfuse-retpoline (indirect jump)])
+

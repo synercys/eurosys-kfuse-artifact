@@ -1,0 +1,45 @@
+tracepoint  ||  # of programs attached ||  type || cpu cycle
+//merger-retpoline
+tracepoint 0 merger-retpoline 1275
+tracepoint 20 merger-retpoline 1639     
+tracepoint 40 merger-retpoline 1753
+tracepoint 60 merger-retpoline 2088
+tracepoint 80 merger-retpoline 2496
+tracepoint 100 merger-retpoline 2717
+tracepoint 120 merger-retpoline 3121
+tracepoint 140 merger-retpoline 3254
+tracepoint 160 merger-retpoline 3701    
+
+//nomerger-retpoline
+tracepoint 0 nomerger-retpoline 1279            
+tracepoint 20 nomerger-retpoline 2797         
+tracepoint 40 nomerger-retpoline 4485
+tracepoint 60 nomerger-retpoline 7004
+tracepoint 80 nomerger-retpoline 9591
+tracepoint 100 nomerger-retpoline 11948
+tracepoint 120 nomerger-retpoline 14306
+tracepoint 140 nomerger-retpoline 16316
+tracepoint 160 nomerger-retpoline 19039
+
+//merger-noretpoline
+
+tracepoint 0 merger-noretpoline 1255
+tracepoint 20 merger-noretpoline  1512   
+tracepoint 40 merger-noretpoline 1668
+tracepoint 60 merger-noretpoline 2173
+tracepoint 80 merger-noretpoline 2354
+tracepoint 100 merger-noretpoline 2835
+tracepoint 120 merger-noretpoline 2963
+tracepoint 140 merger-noretpoline 3470
+tracepoint 160 merger-noretpoline 3721  
+
+//nomerger-noretpoline
+tracepoint 0 merger-retpoline 1262
+tracepoint 20 merger-retpoline 1740    
+tracepoint 40 merger-retpoline 2150
+tracepoint 60 merger-retpoline 2738
+tracepoint 80 merger-retpoline 3660
+tracepoint 100 merger-retpoline 4251
+tracepoint 120 merger-retpoline 4797
+tracepoint 140 merger-retpoline 5389
+tracepoint 160 merger-retpoline 6005

@@ -1,0 +1,29 @@
+# How to run experiments?
+
+[Experiment: tracepoint]
+
+# Step1: Launch VM ($num = 1,2,3,4)
+#
+# $num = 1 => kfuse-retpoline
+# $num = 2 => nokfuse-retpoline
+# $num = 3 => kfuse-noretpoline
+# $num = 4 => nokfuse-noretpoline
+./launch_vm.sh $num 
+
+# Step2: (In VM) ($nfilter = 0, 20, 40, 60, 80, 100, 120, 140, 160 => how many filters attach to the tracepoint?) 
+cd root
+python3 root/bench_tracepoint.py $nfilter &
+
+# Step3: (In VM)  measure Getpid system call's CPU cycles.
+./measure_cpu_cycle_for_tracepoint.out
+ # or, to get quick results, run:
+./bpf_microbench.out 0 1 getpid
+
+
+[Note]
+You may need to run multiple times to get the average result.
+In addition, if your results are different from the expected reusts due to different environment(E.g.The values obtained in the experiment are highly dependent on the execution speed of Getpid system call), please calculate the relative relationship.
+
+We expected that the kernel with KFuse will be faster than without KFuse (Speed: kfuse-retpoline > nokfuse-retpoline; kfuse-noretpoline > nokfuse-noretpoline), 
+and without retpoline will be faster than with retpoline (Speed: kfuse-noretpoline > kfuse-retpoline; nokfuse-noretpoline > nokfuse-retpoline).
+
