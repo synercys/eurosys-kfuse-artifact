@@ -9,6 +9,7 @@
 # $num = 2 => nokfuse-retpoline
 # $num = 3 => kfuse-noretpoline
 # $num = 4 => nokfuse-noretpoline
+cp fs/rootfs.ext4 .
 ./launch_vm.sh $num 
 
 

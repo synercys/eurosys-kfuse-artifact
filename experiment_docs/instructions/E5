@@ -4,6 +4,7 @@
 In the paper, we run Step3 50 times and calculate the average. 
 
 # Step1: Launch VM
+cp fs/rootfs.ext4 .
 ./launch_vm.sh 5
 
 # Step2: (In VM)
