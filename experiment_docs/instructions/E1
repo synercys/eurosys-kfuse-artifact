@@ -1,0 +1,14 @@
+# How to run experiments?
+
+[Experiment: redis with systemd]
+
+# Step1: Run experiment 
+./scripts/bench_merger.sh redis-real
+
+# Step5: see result
+cat bpf_microbench.result
+
+[Note]
+Due to the long running time, we reduce # of iteration.
+In addition, if your results are different from the expected reusts due to different environment, please focus on the relative relationship.
+
