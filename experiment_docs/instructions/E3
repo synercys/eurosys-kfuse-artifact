@@ -13,7 +13,7 @@ cp fs/rootfs.ext4 .
 
 # Step2: (In VM) ($nfilter = 0, 20, 40, 60, 80, 100, 120, 140, 160 => how many filters attach to the tracepoint?) 
 cd root
-python3 root/bench_tracepoint.py $nfilter &
+python3 bench_tracepoint.py $nfilter &
 
 # Step3: (In VM)  measure Getpid system call's CPU cycles.
 ./measure_cpu_cycle_for_tracepoint.out
