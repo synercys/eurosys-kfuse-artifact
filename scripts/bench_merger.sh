@@ -30,13 +30,13 @@ smallest() {
 }
 
 set_cpufreq() {
-    sudo cpupower frequency-set -d 2099MHz -u 2100MHz
-    sudo cpupower frequency-set -g performance
+    # sudo cpupower frequency-set -d 2099MHz -u 2100MHz
+    # sudo cpupower frequency-set -g performance
 }
 
 unset_cpufreq() {
-    sudo cpupower frequency-set -d 800MHz -u 2100MHz
-    sudo cpupower frequency-set -g ondemand
+    # sudo cpupower frequency-set -d 800MHz -u 2100MHz
+    # sudo cpupower frequency-set -g ondemand
 }
 
 cleanup_ssh() {
