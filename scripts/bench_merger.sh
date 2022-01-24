@@ -30,11 +30,13 @@ smallest() {
 }
 
 set_cpufreq() {
+    echo "place holder"
     # sudo cpupower frequency-set -d 2099MHz -u 2100MHz
     # sudo cpupower frequency-set -g performance
 }
 
 unset_cpufreq() {
+    echo "place holder"
     # sudo cpupower frequency-set -d 800MHz -u 2100MHz
     # sudo cpupower frequency-set -g ondemand
 }
@@ -48,7 +50,7 @@ start_vm() {
     sleep 2;
     cp fs/e1fs.ext4 e1fs.ext4
     sudo ./scripts/qemu_kernel.sh $k e1fs.ext4 /lib/systemd/systemd > vm_log &
-    sleep 4;
+    sleep 30;
     scp -C guest/bpf_microbench.out root@$VMIP:~
 }
 
