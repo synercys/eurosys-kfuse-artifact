@@ -2,6 +2,13 @@
 
 [Experiment: redis with systemd]
 
+# Step0: SSH setup (optional)
+# If you cannot use ssh to access this VM, you can follow this step.
+# (1) Generate a public key (ex: ~/.ssh/id_rsa.pub) in your local machine
+# (2) Copy the public key to `/root/.ssh/authorized_keys`
+# (3) Now you can use ssh to access the VM without password
+
+
 # Step1: Run experiment 
 ./scripts/bench_merger.sh redis-real
 
