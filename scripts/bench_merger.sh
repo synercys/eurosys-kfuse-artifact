@@ -90,7 +90,6 @@ calculate_stats() {
     stderr=$(echo ${result_array[@]} | tr ' ' '\n' | st --stderr)
 }
 
-make -C guest bpf_microbench.out
 set_cpufreq;
 for cmd in $@; do
 for k in ${KERNELS[@]}; do
