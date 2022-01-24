@@ -8,3 +8,7 @@ The repository is the artifact for the paper "Verified Programs Can Party: Optim
 
 # Paper
 * (TODO): Link
+
+# Demo Video
+https://user-images.githubusercontent.com/20109646/150867835-eaa54bc6-4566-47dc-b523-4e44ba550492.mp4
+
