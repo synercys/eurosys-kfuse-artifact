@@ -34,3 +34,16 @@ https://user-images.githubusercontent.com/20109646/150867835-eaa54bc6-4566-47dc-
 ## Q4: We also noticed that in your instructions, you recommend downloading the root.ext4 and placing it on the fs folder. However, the launch_vm.sh tries to access root.ext4 from the root of the project and not from the fs folder. Should we move root.ext4 from fs to the root of the project?
 * Yes. In E1, `bench_merger.sh` will copy the e1fs to project root. For E2, E3, E4, E5, the instructions (e.g. [1]) indicate that we need to copy rootfs to project root.
 * [1] https://github.com/synercys/eurosys-kfuse-artifact/blob/main/experiment_docs/instructions/E2#L12
+
+## Q5: We also noticed that in launch_vm.sh there is an attempt to execute ./init.sh script. However, we did not find such script anywhere in your Github repo.
+* The command will be executed inside the VM, so it will not in the GitHub repo. The `init.sh` is in VM (e1fs and rootfs).
+
+## Q6: If you want to setup SSH config as I mentioned in E1, you can refer to the following instructions.
+* Step1: Launch VM with e1fs.ext4 sudo ./scripts/qemu_kernel.sh vm/nokfuse-noretpoline-vm e1fs.ext4 /init.sh
+* Step2: Copy your local public key to /root/.ssh/authorized_keys (In VM)
+* Step3: Close the VM, and run bench_merger.sh (follow E1 instruction)
+
+## Q7: For E3, I could only execute the experiment for $nfilter's value 0 and 20.
+* I have recorded a video [1] to perform E3. Do you restart your VM when you run the next iteration? You can use (Ctrl + A) + X to terminate the VM.
+* [1] https://illinois.zoom.us/rec/share/7UECx-u-V7VGkEvN3a2jO9gz4G8zgkM3c48u-tiWlopsI5MFdOGxLr6sg12X9Iva.BWm_3yzmZHgbPW58
+
