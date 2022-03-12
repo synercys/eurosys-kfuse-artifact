@@ -15,6 +15,8 @@ cp fs/rootfs.ext4 .
 cd root
 ./cgroup_simple_benchmark $nfilter > log &
 
+# restart VM between iterations => (Ctrl + A) + X => Similar to FAQ Q7
+
 # Step3: (In VM) Use iPerf3 to measure TCP bandwidth
 #        Check the following command output or the file `log` 
 iperf3 -c 172.16.2.2 -t 30 -P 16 -l 32K
