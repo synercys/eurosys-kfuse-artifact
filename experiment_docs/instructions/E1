@@ -15,7 +15,12 @@
 # Step5: see result
 cat bpf_microbench.result
 
+
 [Note]
-Due to the long running time, we reduce # of iteration.
-In addition, if your results are different from the expected reusts due to different environment, please focus on the relative relationship.
+1. The result will be stored in bpf_microbench.result with the foramt 'redis-real, #of filter, vm_type, throughput, stderr'
+   And our goal is to demonstrate that with KFuse open, we have greater redis throughtput. 
+2. We expected to see that mergers have greater throughtput. 
+3. This experiment corresponds to part 5.1.1 of the paper, E1 of the artifact appendix.
+4. Due to the long running time, we reduce # of iteration.
+5. if your results are different from the expected reusts due to different environment, please focus on the relative relationship.
 
