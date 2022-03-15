@@ -23,8 +23,10 @@ iperf3 -c 172.16.2.2 -t 30 -P 16 -l 32K
 
 
 [Note]
-You may need to run multiple times to get the average result.
-In addition, if your result is unstable, you can pin your tasks on idle CPUs, and fix their frequency.
-We expected that the kernel with KFuse will be faster than without KFuse (Speed: kfuse-retpoline > nokfuse-retpoline; kfuse-noretpoline > nokfuse-noretpoline), 
-and without retpoline will be faster than with retpoline (Speed: kfuse-noretpoline > kfuse-retpoline; nokfuse-noretpoline > nokfuse-retpoline).
-
+1. the result(TCP bandwidth) has the format '[SUM] XXX GBytes XXX Gbits/sec'. 
+   And our goal is to demonstrate that with KFuse open, we have greater TCPbandwidth sicne all firewall rules are conatin in one single BPF program.
+2. We expected that the kernel with KFuse will be faster(greater bandwidth) than without KFuse (Speed: kfuse-retpoline > nokfuse-retpoline;   kfuse-noretpoline > nokfuse-noretpoline), 
+   and without retpoline will be faster than with retpoline (Speed: kfuse-noretpoline > kfuse-retpoline; nokfuse-noretpoline > nokfuse-retpoline).
+3. This experiment corresponds to part 5.3 of the paper, E4 of the artifact appendix
+4. You may need to run multiple times to get the average result.
+5. if your result is unstable, you can pin your tasks on idle CPUs, and fix their frequency.
