@@ -41,7 +41,9 @@ cd /root/tail-call-benchmark/
 
 
 [Note]
-Your experiment results may differ from ours due to different environment.
-However, the relationship between these 3 experiments should be the same. 
-(Speed: [tail-call kfuse-retpoline] > [tail-call nokfuse-retpoline (direct jump)] > [tail-call nokfuse-retpoline (indirect jump)])
-
+1. the result will be a list of interger. It shows the overhead for 0-32 tail calls(Bigger interger means bigger overhead).
+   And our goal is to demonstrate that with KFuse open, the overhead of indirect jumps of tail calls are optimized away
+2. Your experiment results may differ from ours due to different environment.
+   However, the relationship between these 3 experiments should be the same. 
+   (Speed: [tail-call kfuse-retpoline] > [tail-call nokfuse-retpoline (direct jump)] > [tail-call nokfuse-retpoline (indirect jump)])
+3. This experiment corresponds to part 5.4 of the paper, E5 of the artifact appendix
