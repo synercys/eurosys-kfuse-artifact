@@ -23,9 +23,10 @@ python3 bench_tracepoint.py $nfilter &
 
 
 [Note]
-You may need to run multiple times to get the average result.
-In addition, if your results are different from the expected reusts due to different environment(E.g.The values obtained in the experiment are highly dependent on the execution speed of Getpid system call), please calculate the relative relationship.
-
-We expected that the kernel with KFuse will be faster than without KFuse (Speed: kfuse-retpoline > nokfuse-retpoline; kfuse-noretpoline > nokfuse-noretpoline), 
-and without retpoline will be faster than with retpoline (Speed: kfuse-noretpoline > kfuse-retpoline; nokfuse-noretpoline > nokfuse-retpoline).
-
+1. the result has the format 'XXX cycles per getpid'. It means to execute the getpid system call, we need XXX cpu cycles. Clearly, with tracepoint BPF filters attached, we need more cycles to run. 
+   And our goal is to demonstrate that with KFuse open, we need less cpu cyles to run the system call.
+2. We expected that the kernel with KFuse will be faster(less cycles) than without KFuse (Speed: kfuse-retpoline > nokfuse-retpoline; kfuse-noretpoline > nokfuse-noretpoline), 
+   and without retpoline will be faster than with retpoline (Speed: kfuse-noretpoline > kfuse-retpoline; nokfuse-noretpoline > nokfuse-retpoline).
+3. This experiment corresponds to part 5.2 of the paper, E3 of the artifact appendix
+4. You may need to run multiple times to get the average result.
+5. if your results are different from the expected reusts due to different environment(E.g.The values obtained in the experiment are highly dependent on the execution speed of Getpid system call), please calculate the relative relationship.
