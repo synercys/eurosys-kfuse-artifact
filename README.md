@@ -3,7 +3,7 @@ The repository is the artifact for the paper "Verified Programs Can Party: Optim
 
 # How to run?
 * Step0: Please read the FAQ section at first.
-* Step1: Download `vm` and `fs` from [Box](https://uofi.box.com/s/u4r3ka9jzaxcar2yi7flc6l7j13edoqv) or [Google Drive](https://drive.google.com/drive/u/2/folders/1T_CJdnbN0JdFMOqc9hndLXTN8rXDrODV?fbclid=IwAR3agN4m-b7InzfhoeA5OGgbc-AYHdX7V8fSWuVOLV37-Z-m5XpLrZXLddw). 
+* Step1: Download `vm` and `fs` from [Box](https://uofi.box.com/s/u4r3ka9jzaxcar2yi7flc6l7j13edoqv) or [Google Drive](https://drive.google.com/drive/u/2/folders/1T_CJdnbN0JdFMOqc9hndLXTN8rXDrODV?fbclid=IwAR3agN4m-b7InzfhoeA5OGgbc-AYHdX7V8fSWuVOLV37-Z-m5XpLrZXLddw) (20GB for each file system images). 
   * FAQ Q1 describes that how to download the artifact from Google Drive on your work station. 
 * Step2: Follow the instructions in the directory `experiment_docs/instructions/` to run experiments E1 to E5.
 * Step3: Check the results with the expected results in the directory `experiment_docs/expected_result`.
