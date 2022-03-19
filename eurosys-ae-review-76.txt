@@ -1,0 +1,522 @@
+EuroSys'22 Artifacts Paper #76 Reviews and Comments
+===========================================================================
+Paper #76 Verified Programs Can Party: Optimizing Kernel Extensions via
+Post-Verification In-Kernel Merging
+
+
+Comment @A1 by Reviewer C
+---------------------------------------------------------------------------
+Good morning, 
+I'm having an extremely hard time trying to fetch both rootfs.ext4 and e1fs.ext4 files from the site you're provided. 
+The Internet connection here is reliable and after a certain amount of time, looks like the download is being interrupted server-side, and that time is not enough for downloading 20GB. Can you provide an additional source for downloading those 2 files? 
+Thank you!
+
+
+Comment @A2 by Reviewer A
+---------------------------------------------------------------------------
+Dear authors,
+
+We are having some difficulties in re-running the experiments. Here are the steps some of us took:
+
+1. Installed Ubuntu on a VM on a Mac;
+2. Installed the dependencies by running the install_dep.sh script;
+
+These first two steps worked fine. From there, we had some issues:
+
+1. In the E1 file, where we find instructions to execute the experiment it says something about ssh'ing a VM. What VM? How to launch said VM? By executing launch_vm.sh script? It throws the following error message:
+
+3: tap_kfuse: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN mode DEFAULT group default qlen 1000
+Reuse tap_kfuse
+Could not access KVM kernel module: No such file or directory
+qemu-system-x86_64: failed to initialize kvm: No such file or directory
+
+
+2. We also noticed that in your instructions, you recommend downloading the root.ext4 and placing it on the fs folder. However, the launch_vm.sh tries to access root.ext4 from the root of the project and not from the fs folder. Should we move root.ext4 from fs to the root of the project?
+
+3. We also noticed that in launch_vm.sh there is an attempt to execute ./init.sh script. However, we did not find such script anywhere in your Github repo.
+
+Could you please shed some light on how we can launch the VMs to reproduce E1 and E2 experiments?
+
+Thank you very much.
+
+
+Kind regards,
+Reviewers.
+
+
+Comment @A3 by Kai-Hsun Chen <kaihsun2@illinois.edu>
+---------------------------------------------------------------------------
+Dear Reviewers, 
+
+Q1: Installed Ubuntu on a VM on a Mac;
+> please use a native Ubuntu machine that supports KVM.
+
+Q2: In the E1 file, where we find instructions to execute the experiment it says something about ssh'ing a VM. What VM? 
+> In E1, we will use the script `bench_merger.sh` to launch the VM. For E2, E3, E4, E5, we use the script `launch_vm.sh` to launch VMs.
+
+Q3: How to launch said VM? By executing launch_vm.sh script? 
+> See Q2 answer
+
+Q4: It throws the following error message
+> See Q1 answer
+
+Q5: We also noticed that in your instructions, you recommend downloading the root.ext4 and placing it on the fs folder. However, the launch_vm.sh tries to access root.ext4 from the root of the project and not from the fs folder. Should we move root.ext4 from fs to the root of the project?
+
+> Yes. In E1, `bench_merger.sh` will copy the e1fs to project root. For E2, E3, E4, E5, the instructions (e.g. [1]) indicate that we need to copy rootfs to project root.
+
+[1] https://github.com/synercys/eurosys-kfuse-artifact/blob/main/experiment_docs/instructions/E2#L12
+
+Q6: We also noticed that in launch_vm.sh there is an attempt to execute ./init.sh script. However, we did not find such script anywhere in your Github repo.
+
+> The command will be executed inside the VM, so it will not in the GitHub repo. The `init.sh` is in VM (e1fs and rootfs). 
+
+Q7: If you want to setup SSH config as I mentioned in E1, you can refer to the following instructions.
+
+Step1: Launch VM with e1fs.ext4
+sudo ./scripts/qemu_kernel.sh vm/nokfuse-noretpoline-vm e1fs.ext4 /init.sh
+
+Step2: 
+Copy your local public key to `/root/.ssh/authorized_keys` (In VM)
+
+Step3: Close the VM, and run bench_merger.sh (follow E1 instruction)
+
+Thank you for your effort. If you have any questions, feel free to let me know!
+
+Best,
+Kai-Hsun
+
+
+Comment @A4 by Reviewer A
+---------------------------------------------------------------------------
+Dear authors,
+
+I managed to get access to a native Ubuntu machine, however, I only have ssh access to it. I can't seem to download the files you provided on box or Google drive. I can't get a link to the files, so I can't curl the files from the command line. I downloaded the files to my machine, but my upload link is just too slow to upload the fs files. Could you please provide an easier way to download the VMs and FS files from the command line?
+
+Thank you.
+
+
+Comment @A5 by Reviewer C
+---------------------------------------------------------------------------
+Dear authors, 
+As Ubuntu 20.10 has been deprecated and the release file from the apt repository has been removed, using git, is this paper valid for also other instances/versions of Ubuntu as well?
+
+Regards
+
+
+Comment @A6 by Hsuan-Chi Kuo <hckuo2@illinois.edu>
+---------------------------------------------------------------------------
+It should but we did not verify it. 
+
+To make Ubuntu 20.10 work, the release file is here: http://old-releases.ubuntu.com/
+You can modify your apt config file to locate them to install necessary dependencies. Please refer to this article: https://coderwall.com/p/3n6xka/fix-apt-on-old-unsupported-ubuntu-releases
+
+Thank you
+
+
+Comment @A7 by Reviewer A
+---------------------------------------------------------------------------
+Dear authors,
+
+Is it possible to make the files available to download from a command line? I saw box has a way to allow curl for download (see https://developer.box.com/guides/downloads/file/). Could you please help me download files from box using curl?
+
+I have tried using a command-line based web browser. I have tried using gdown to download large files from GoogleDocs with no success. I have tried curl and wget with no success.
+
+This is really limiting my options to run the experiment.
+
+Thank you.
+
+
+Comment @A8 by Kai-Hsun Chen <kaihsun2@illinois.edu>
+---------------------------------------------------------------------------
+Dear Reviewers,
+
+You can download it from Google Drive. I use gdrive [1] on my Linux workstation.
+
+Step1: Download the Linux binary of drive.
+
+Step2: Follow the instructions in the repo to provide your verification code.
+
+Step3: Download from CLI
+
+Ex1: Download e1fs
+The address to download e1fs is as follows.
+https://drive.google.com/file/d/1x6O2TmfnezbdSDhy6zTOOd3fjTC3TY3C/view?usp=sharing
+
+Then, we can download it with the following command.
+
+./gdrive download 1x6O2TmfnezbdSDhy6zTOOd3fjTC3TY3C
+
+
+[1] https://github.com/prasmussen/gdrive
+
+[2] https://drive.google.com/drive/u/2/folders/1T_CJdnbN0JdFMOqc9hndLXTN8rXDrODV
+
+Best,
+Kai-Hsun
+
+
+Comment @A9 by Reviewer A
+---------------------------------------------------------------------------
+Thank you very much for your response. Gdrive definitely solved the problem. I advise adding that to the instructions to execute the experiments.
+
+How long does it take to run all experiments?  E1 took around 2 hours.
+
+Also, I was wondering if there are scripts to plot some of the graphs on the paper based on the results we get from running the experiments, or some easier way to compare the results we get with the expected results you provide. E2 description does a better job than E1, since it explicitly says which kernel should be faster, etc.
+
+Just some points to keep in mind to improve the artifact.
+
+
+Comment @A10 by Reviewer A
+---------------------------------------------------------------------------
+Dear authors,
+
+I have finished executing all experiments. In the end, I got very confused with the output of the experiments (even after watching the video you made available on Github multiple times). The fact that the experiment's output is different than the provided expected output makes it really difficult to understand what is going on in general. I could not determine with confidence whether or not the results were successfully replicated (considering the differences in my machine settings).
+
+Also, all experiments worked except for E3. Whenever I ran "python3 bench_tracepoint.py $nfilter &" for $nfilter's value >= 40, I got the following exception:
+
+root@vm:/root# python3 bench_tracepoint.py 40 &
+[1] 737
+root@vm:/root# could not open bpf map: array, error: Operation not permitted
+Traceback (most recent call last):
+  File "bench_tracepoint.py", line 44, in <module>
+    b= BPF(text=bpf_text)
+  File "/usr/lib/python3/dist-packages/bcc/__init__.py", line 347, in __init__
+    raise Exception("Failed to compile BPF module %s" % (src_file or "<text>"))
+Exception: Failed to compile BPF module <text>
+
+So for E3, I could only execute the experiment for $nfilter's value 0 and 20.
+
+Overall, the instructions are confusing. E.g., I was not sure if I had to copy the fs to the root of the project every time I was going to execute the experiment or if I had to do it for every iteration within the same experiment. I guess a script automating the entire experiment (E2, E3, E4) would facilitate a lot and eliminate such confusion.
+
+Cheers.
+
+
+Comment @A11 by Kai-Hsun Chen <kaihsun2@illinois.edu>
+---------------------------------------------------------------------------
+Dear Reviewers,
+
+I am not 100% sure about the root cause of your questions about E3, but I have recorded a video [1] for you. Do you restart your VM when you run the next iteration? You can use `(Ctrl + A) + X` to terminate the VM. 
+
+[1] https://illinois.zoom.us/rec/share/7UECx-u-V7VGkEvN3a2jO9gz4G8zgkM3c48u-tiWlopsI5MFdOGxLr6sg12X9Iva.BWm_3yzmZHgbPW58
+
+
+Maybe you can provide your experiment result, and we can help you determine whether it is reproduced successfully or not.
+
+Thank you!
+
+
+Comment @A12 by Reviewer C
+---------------------------------------------------------------------------
+Good evening, the time has passed, and still, I wasn't able to fetch any of those 2 20GB fs files, required for the evaluation. 
+This could be a problem of mine, even if I tried on multiple devices on multi networks, but as last chance, could you please @authors be able to host a cloud environment in which we could access on and in which we could run the experiments? Thank you!
+
+
+Comment @A13 by Reviewer A
+---------------------------------------------------------------------------
+Dear authors,
+
+I managed to re-run E3 following the video made available in your response @A11 and it worked now.
+
+Thank you.
+
+
+Comment @A14 by Kai-Hsun Chen <kaihsun2@illinois.edu>
+---------------------------------------------------------------------------
+Dear Reviewers, 
+
+Which source do you use to download? Since Dropbox is not stable, we uploaded the artifact to Google Drive too. You can see the artifact repo for both links. 
+
+Do you mean that you cannot download the artifact from both links? In @A9, one of the reviewers said that you can download the artifact from Google Drive.
+
+Repo: https://github.com/synercys/eurosys-kfuse-artifact
+
+Best,
+Kai-Hsun
+
+
+Comment @A15 by Reviewer C
+---------------------------------------------------------------------------
+Dear Kai, 
+I've tried using Google Drive as well, with no results, but looks like we do have another way to perform the experiment and I'm going to post my review on this soon :) 
+
+Regards
+
+
+
+Review #76A
+===========================================================================
+* Updated: 10 Mar 2022 3:16:24pm EST
+
+Artifacts Available badge
+-------------------------
+3. Yes
+
+Artifacts Functional badge
+--------------------------
+3. Yes
+
+Results Reproduced badge
+------------------------
+2. No
+
+Summary of the artifact
+-----------------------
+# Artifacts available badge
+
+- The artifact is publicly available on Github with essential parts of it (file systems and virtual machines) hosted both on Box and Google Drive for download. Despite the initial difficulties in downloading some of the artifact's files, the authors managed to make them available in a way that enables convenient access to the entire artifact (for those who have Google drive accounts).
+
+- The authors provided descriptions and videos illustrating how to run the experiments and interpret their results on their Github repository. The descriptions are sometimes confusing, and the experiments' output is difficult to compare with the provided "expected results". I leave some comments on how the authors can improve on this aspect of their artifact.
+
+- I couldn't find which licenses the authors chose for their artifacts. I suggest selecting a license that would enable free use of the artifact for comparison. This is not mandatory, but it would be good to have.
+
+Despite having some points for improvement, I suggest awarding the badge.  
+
+# Artifacts functional badge
+
+- The authors make available descriptions on how to install and run each of the experiments. They also make available videos to facilitate the artifact execution. 
+
+- The authors provide files and scripts to install dependencies and to run the different experiments. 
+
+- The authors mention the environment in which they executed the artifact but failed to clearly state a list of supported environments (e.g., the artifact does not run in virtual machines).
+
+- All available experiments were successfully executed. 
+
+However, there is plenty of room to improve the artifact. The instructions, both written and the videos, were not enough to fully understand how to run the experiments, troubleshoot, or fully interpret the results. I only managed to run all experiments after interacting with the authors. The authors also never mention that we should explicitly download and install kvm (more on that later on in my review). Finally, the output of the experiments does not match the "expected results" provided by the authors. This makes it really difficult to understand the results of the artifact.
+
+I highly recommend the authors improve the description of the artifact. Specifically on the interpretation of the results, and perhaps scripts that better automate the execution of the different available experiments.
+
+I suggest awarding this badge but really recommend the author to improve on the description of how to install and execute the artifact, the type of environment to run the different experiments, and the interpretation of the results (I provide a full list of the most pressing issues).
+
+# Artifacts reproduced badge
+
+- The authors provide the step by step to execute the experiments.
+- The experiment results do not match the available "expected results". There is also not a lot of information on how to correctly interpret the output of the experiment.
+- There are no scripts to plot or recreate graphs from the paper.
+
+I do not recommend awarding this badge as it is really difficult to understand whether or not the results were replicated correctly. A more descriptive instruction should be provided to assist users to understand and interpret the outcome of the experiments. I would also suggest providing scripts to reformat the output to something more meaningful and easy to compare. I understand that different machine settings would impact the results, but a more in-depth description of what is expected from the output of the experiments would facilitate users to be more confident in the results they obtain from the artifact.
+
+Comments for authors
+--------------------
+After downloading all artifact files and installing all dependencies (even the ones not mentioned by the authors), it is possible to execute all artifact experiments. Here I list some of the points that could be improved in this artifact.
+
+1. At first, there was not an obvious way to download the required files either from Box or Google Drive directly from the command line. This was a serious impediment for many reviewers to download and execute the artifact. Fortunately, the authors described the use of "gdrive" to download the files from Google Drive directly from the command line. This made the execution of the artifact possible for people who have Google Drive accounts. The authors should add to their description on how to execute their artifact the instructions to download the required files using "gdrive". 
+2. I recommend the authors to explicitly mention that their artifact is meant for executing on physical machines running Ubuntu. I also urge the authors to thoroughly test their artifact in a different Ubuntu version, as Ubuntu 20.10 is no longer supported.
+3. After installing all dependencies from install_dep.sh the artifact does not work. I had to install kvm and check whether it was working ($ kvm-ok ). I suggest including those instructions in the artifact or adding those commands to the install_dep.sh script.
+4. Executing all experiments is extremely manual and cumbersome. This could be made better if there were an end-to-end script that would take care of executing each experiment automated from beginning to end.
+5. There could be scripts to reformat the outcome of each experiment to match the ones added to the expected results folder.
+6. There could be scripts to generate some of the graphs in the paper.
+7. There could be more information on how to interpret the outcome of each experiment and how to compare it with the expected results.
+8. The authors could provide more information on how long each experiment run and how to detect whether the experiment got stuck or failed. The authors do not provide any information in that regard.
+9. The authors should describe the minimum machine settings that would support the artifact. E.g., minimum disk size, as each of the fs files size is up to 20GB each.  
+10. The instructions on executing some experiments are confusing.  E.g., do we have to copy the fs to the root of the project every time we run an experiment? or every cycle of execution within each experiment? An automated script to run each experiment would solve that. Also, the authors made available an extra video that demonstrates how to execute E3 step by step which helped a lot. I recommend authors consider including such a video in the artifact description.
+
+
+
+Comment @A16 by Hsuan-Chi Kuo <hckuo2@illinois.edu>
+---------------------------------------------------------------------------
+Thank you for the detailed review. Do we have to manually add the approved badges into the paper or this is an automatic process?
+
+Thank you
+
+
+Comment @A17
+---------------------------------------------------------------------------
+Badges are applied automatically by ACM. You will receive more information tomorrow or Saturday. 
+
+We will finalize the review process and provide our badge decisions later next week.
+
+Thank you,
+Anjo
+
+
+
+Review #76B
+===========================================================================
+
+Artifacts Available badge
+-------------------------
+3. Yes
+
+Artifacts Functional badge
+--------------------------
+3. Yes
+
+Results Reproduced badge
+------------------------
+2. No
+
+Summary of the artifact
+-----------------------
+The artifact includes source code hosted on GitHub, virtual machine and file system images hosted on Box, instructions for running experiments from the paper, and a demo video walking through these experiments. I support awarding the "artifacts available" and "artifacts functional" badges, but not the "results reproduced" badge.
+
+Comments for authors
+--------------------
+Artifacts available? Yes
+---------------------------------
+
+All of the source code, images, and instructions needed to run the experiments are publicly available, so I support awarding this badge. There is, however, room for improvement:
+
+- Downloading the virtual machine and file system images from Box was not the most convenient, especially when running the experiments on a server. It would be helpful if the authors included a way to download the files via command line in the final artifact.
+
+- The authors should mention upfront that the artifact needs to be run on a native Ubuntu machine and not in a virtual machine. The authors run their experiments on Ubuntu 20.10, which is short-term release and no longer supported. I suggest the authors recommend a version of Ubuntu with LTS in the final artifact.
+
+Artifacts functional? Yes
+-----------------------------------
+The authors provide instructions to run the experiments, which (with some manual effort and investigation) ran as expected. For this reason, I support awarding this badge. Again, there are some improvements I'd like to see in the final artifact:
+
+- Although the instructions for each of the experiments is laid out very neatly, the process of setting up and running each of the experiments was a bit cumbersome. There is quite a bit of manual effort involved where automation would have been helpful and which would not require too much additional work.
+
+- It would be helpful to give estimates for how long each of experiments should take.
+
+- It would be helpful to have more documentation for each of the experiments, i.e., what the experiment is evaluating, how to interpret the results, which sections/figures in the paper these results correspond to. I understand these instructions are provided in the artifact appendix and certainly described in detail in the paper, but having the artifact itself be a bit more self-contained would be beneficial.
+
+Results reproduced? No
+-----------------------------------
+Seeing the improvements suggested above, I believe this artifact needs some additional work to received the "results reproduced" badge.
+
+- The instructions and scripts are sufficient for producing the raw data of the experiments, but not sufficient for reproducing the results and figures presented in the paper. Some additional automation scripts would help, and scripts for reproducing the figures from the raw data would be beneficial.
+
+- As suggested before, more documentation on how to interpret these results and pointers of these results to the paper and its figures would be convenient.
+
+
+
+Review #76C
+===========================================================================
+
+Artifacts Available badge
+-------------------------
+3. Yes
+
+Artifacts Functional badge
+--------------------------
+3. Yes
+
+Results Reproduced badge
+------------------------
+2. No
+
+Summary of the artifact
+-----------------------
+Artifact is composed of scripts, FS, and required VMs in order to reproduce paper experiments. The Github repository includes only scripts to perform evaluation, while the rest of the files should be downloaded separately. FS files, with the size of 20GB each, weren't easy to fetch from my environment, CloudLab was needed in order to make an evaluation on this. 
+
+Instructions were available for 5 Experiments. While, for timing purposes, the number of the interaction was diminished, and the author clearly underline to reproduce multiple time the experiment in order to get expected data from the paper, interpolating data obtained from multiple consequent experiments in something readable wasn't easy. No plotting scripting was given to the evaluator. 
+
+Furthermore, even if the experiments and the artifacts were reproduced successfully, thank also to Author's video as an experiment tutorial, wasn't clear if the data final result was valid or not.
+
+Comments for authors
+--------------------
+The Paper is presented well, and everything is clear. Most of the work could be done by integrating a better environment to the end-user, integrating a plotting suite and scripting in order to make clear how to interpret data results.
+
+
+
+Review #76D
+===========================================================================
+* Updated: 12 Mar 2022 11:04:40am EST
+
+Artifacts Available badge
+-------------------------
+3. Yes
+
+Artifacts Functional badge
+--------------------------
+3. Yes
+
+Results Reproduced badge
+------------------------
+2. No
+
+Summary of the artifact
+-----------------------
+### Summary
+
+This paper presents KFuse, a framework that can automatically merge chains of BPF programs through program transformations -- unrolling loops, transforming indirect jumps into direct jumps, and optimizing memory accesses -- without loosing security guarantees. In particular, KFuse relies on instruction rewriting, altering jump offsets, overwriting return values, etc. to ensure that the newly created BPF programs retain all safety properties required by traditional BPF verifiers. Overall, KFuse achieves 85% performance improvement over unmodified BPF chains and 7% application-level speedup over existing BPF use cases (e.g., seccomp BPF filters used by the systemd Linux sub-system)
+
+
+### Available Badge: Accept
+
+The authors provide KFuse as an open source tool stored on Github and Zenodo. Both repositories contain pre-build VMs and file system images. The Zenodo repostiory has an attached DOI which I strongly suggest the authors add to the camera ready version of their paper.
+
+
+### Functional Badge: Accept
+
+I was able to download the VMs, install dependencies and run all 5 experiments to completion. The step-by-step instructions and the scripts/code available appear to match the implementation and experimental methodology described in the (pre- camera-ready version of the) paper.
+
+**Suggestions**:  I have a few suggestions on how the authors can improve the instructions for installing, building, running, and evaluating KFuse. 
+
+(1) First, there is no clear description on how to properly interpret the results --- instructions in the video made available by the authors only illustrate (a fraction of) what numbers the user should expect to see, not what they indicate. I strongly urge the authors to improve this part of the artifact through proper documentation and providing scripts that generate the plots included in evaluation section of the paper. This is the main impediment in validating the paper's claims. It also hinders the ability of other researchers to compare with or build upon KFuse...
+
+(2) Second, the installation instructions are missing some steps, most notably the fact that the artifact requires KVM to be install and running. Also, there is no mention that KFuze needs bare metal access and is not to be executed in a VM. The discussion in which the authors engaged on HotCRP is a great start. I encourage the authors to incorporate it into the README files. 
+
+(3) Third, troubleshooting installation, build and execution issues was a significant issue with this artifact. I hope the authors use the comments on HotCRP to improve their tooling and also provide users with a list of "pitfalls" or "frequent errors" both for installing and running experiments. I suggest an overhaul of the documentation. 
+
+(4) Forth, it would be nice if the authors provide a detailed description on how to integrate KFuse with other Linux subsystems. A step-by-step guide similar to the installation & experiments setup instruction would be greatly appreciated. However, I would suggest that (1)-(3) should be regarded as higher priority that this nice-to-have feature. 
+
+
+### Results Reproduced Badge: Reject
+
+The authors provide step-by-step instructions on how to configure and run the experiments described in the paper. However, despite best efforts I cannot asses with reasonable confidence that the raw numbers produced by each experiment corresponds to the figures and claims made by the authors.  
+
+The major issue with replicating results is the lack of straightforward means to interpret and directly compare results with those presented in the paper. While the experiments run to completion (albeit experiment #1, #4 and #5 take much more time than indicated by the authors despite running on a more powerful machine...), I found no reasonable, best-effort way to tell whether the numbers are of similar magnitude to those described in the evaluation section. In particular, there are no scripts to process the raw data and generate plots similar to Fig 8, 10, 11 and 12 (Section 5). Moreover, the authors do not provide the raw numbers used to generate those figures (e.g., in an appendix) in order to directly compare the original outputs with the replicated numbers. Finally, there are no instructions on how to interpret the raw results and what to expect in terms of output from each experiment (the video provided could still be improved in that regard).
+
+A minor issue is about the README files which provide insufficient instructions to successfully run experiments end-to-end. Ultimately, the authors had to record a video of them typing the relevant commands which helped overcome most configuration/build/execute hurdles. I suggest they either overhaul the documentation accordingly or package the video with KFuse as a tutorial.
+
+Another minor issue is related to environment and system requirements:
+
+(1) First, KMV has to be installed and running --- this is not mentioned in any of the README files provided by the authors;
+
+(2) Second, experiments do not run in a VM, need bare metal access;
+
+(3) Third, the entire process relies on manual labor instead of scripts; this makes replication error-prone with little instructions on how to troubleshoot.
+
+**Suggestions**: As mentioned above, the main challenge in awarding the RR badge is to determine whether the raw numbers generated on my machine match those in the evaluation section. Either providing scripts to post-process the data and plot relevant graphs, or, at minimum, the raw data from which they generated Figs 8, 10, 11, and 12 would probably help alleviate this issue. Without these updates, validating the main claims of the paper and correctly interpreting results becomes significantly more difficult.
+
+Comments for authors
+--------------------
+I am happy to work with the authors over the next few days if they provide scripts to reformat the raw numbers generated by each experiment. At minimum, the authors can release the scripts already used to generate the figures in Section 5.
+
+
+
+Comment @A18 by Reviewer A
+---------------------------------------------------------------------------
+Dear authors,
+
+After deliberation, the reviewers agreed that the following changes must be made. We made two lists with things to change. The first one is to be included in the artifact's appendix. Please note that these changes should be made for the camera-ready version. The second list of changes is to be applied to the artifact itself, and they can be done at a later moment.
+
+1. Improvements to be included in the artifact's appendix:
+
+* In the abstract (A1), we recommend the authors to add the size of the file system images required to run the experiment.
+* In the hardware dependencies (A2.2), we recommend the authors to add the minimum disk size required to accommodate all required files, including the two file system images.
+* Also, in the hardware dependencies, we recommend the authors to add a note that the experiments do not run on a virtual machine.
+* In the software dependencies (A2.3), we recommend authors to add kvm as a dependency and to add a note stating that the authors executed their experiments on Ubuntu 20.10, but other versions of Ubuntu can be used (and state a different supported/available version). Of course, the authors should make sure that a supported/available Ubuntu version runs the experiments appropriately.
+* In the setup (A3), the authors should add that kvm should be installed (or add the instructions to install kvm in their install_dep.sh script).
+
+
+2. Improvements to be applied to the artifact itself:
+
+* Add instructions to download files using "gdrive"
+* Add instructions on how to install kvm.
+* Extend the artifact description on how to interpret the output of experiments, and/or add scripts to reformat the obtained output into the "expected results" output format to simplify comparison.
+* Add to the description that this artifact only runs on bare metal and expand the information on the expected machine settings (e.g., minimum disk size). The authors should also make sure that their artifact runs on Ubuntu 20.04 or another supported/available version.
+
+We thank the authors for their artifact submission and the helpful interactions with the reviewers during the revision period.
+
+
+Comment @A19 by Kai-Hsun Chen <kaihsun2@illinois.edu>
+---------------------------------------------------------------------------
+Dear reviewers, 
+
+For the artifact's appendix, we updated the hardware and software requirements. For the artifact itself, we update the experiment instructions to describe more details about the interpretation of the experiment results. In addition, we also summarize the questions you faced in the artifact evaluation process into a FAQ section.
+
+For KVM, we add "The experiments require an amd64 machine with virtualization capability because they are run in a KVM virtual machine." in hardware dependencies. 
+
+Thank you for the reviews and useful recommendations!
+
+Best,
+Kai-Hsun
+
+
+Comment @A20
+---------------------------------------------------------------------------
+Dear authors,
+
+we highly appreciate your efforts at integrating feedback from this evaluation process. Thank you!
